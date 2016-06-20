@@ -1,0 +1,117 @@
+<div class="panel panel-default profile">
+	<div class="panel-body">
+		<div class="row">
+			<div class="col-md-12">
+				<h2 style="margin-left:10px;"><strong><em>{{member.name}}</em></strong></h2>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<img class="img-responsive img-thumbnail" src="images/eminescu.jpg" fallback-src="images/noimage.png" style="margin-bottom:10px;">
+				<div class="btn btn-primary btn-sm btn-block" ngf-select="upload($file)">Upload image</div>
+			</div>
+			<div class="col-md-offset-1 col-md-8">
+				<div class="panel panel-default">
+					<div class="panel-heading profile-header">
+						<h3 class="panel-title">General information</h3>
+					</div>
+					<div class="panel-body info-panel">
+						<button ng-if="canSee(member.email)" ng-hide="infoEditMode" class="btn btn-link edit-info" ng-click="editInfo()" title="Edit information"><span class="glyphicon glyphicon-pencil"></span></button>
+						<button ng-show="infoEditMode" class="btn btn-link edit-info" ng-click="saveInfo()" title="Save changes" ng-disabled="isFormDirty()"><span class="glyphicon glyphicon-floppy-saved"></span></button>
+						<button style="margin-left:30px;" ng-show="infoEditMode" class="btn btn-link edit-info" ng-click="cancelUpdateInfo()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
+						<dl ng-hide="infoEditMode" ng class="dl-horizontal">
+							<dt><h4><strong>Role</strong></h4></dt>
+							<dd><h4><em>{{member.role}}</em></h4></dd>
+							<dt><h4><strong>Function</strong></h4></dt>
+							<dd><h4><em>{{member.memberFunction}}</em></h4></dd>
+							<dt><h4><strong>Personal page</strong></h4></dt>
+							<dd><h4><em>{{member.personalPage}}</em></h4></dd>
+							<dt><h4><strong>Email</strong></h4></dt>
+							<dd><h4><em>{{member.email}}</em></h4></dd>
+						</dl>
+						<form ng-show="infoEditMode" class="form-horizontal" name="myform" role="form" novalidate="">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Name</label>
+								<div class="col-md-9">
+									<input class="form-control" name="nm" type="text" ng-model="member.name" required>
+									<small ng-show="myform.nm.$error.required" class="text-error2">Required</small>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Role</label>
+								<div class="col-md-9">
+									<input class="form-control" name="rl" type="text" ng-model="member.role" required>
+									<small ng-show="myform.rl.$error.required" class="text-error2">Required</small>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Function</label>
+								<div class="col-md-9">
+									<input class="form-control" name="fct" type="text" ng-model="member.memberFunction" required>
+									<small ng-show="myform.fct.$error.required" class="text-error2">Required</small>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Personal page</label>
+								<div class="col-md-9">
+									<input class="form-control" type="text" ng-model="member.personalPage">
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<h3>Teaching <button ng-if="canSee(member.email)" ng-hide="lectureEditMode" class="btn btn-link edit-lecture" ng-click="editLecture()" title="Add new lecture"><span class="glyphicon glyphicon-plus"></span></button></h3>
+				<div class="lecture-info">
+					<uib-accordion ng-hide="lectureEditMode" close-others="true">
+					    <uib-accordion-group ng-repeat="lecture in member.lectures" is-open="false">
+					    	<uib-accordion-heading>
+					    		{{lecture.name}} 
+					    	</uib-accordion-heading>
+					      	<button ng-if="canSee(member.email)" class="btn btn-link edit-lecture" ng-click="editLecture(lecture)" title="Edit information"><span class="glyphicon glyphicon-pencil"></span></button>
+					      	<button ng-if="canSee(member.email)" style="margin-top:40px;" class="btn btn-link edit-lecture" ng-click="zapLecture(lecture)" title="Remove lecture"><span class="glyphicon glyphicon-trash"></span></button>
+							<dl ng class="dl-horizontal">
+								<dt><h4><strong>Name</strong></h4></dt>
+								<dd><h4><em>{{lecture.name}}</em></h4></dd>
+								<dt><h4><strong>Line</strong></h4></dt>
+								<dd><h4><em>{{lecture.line}}</em></h4></dd>
+								<dt><h4><strong>Laboratory</strong></h4></dt>
+								<dd><h4><em>{{lecture.laboratory}}</em></h4></dd>
+								<dt><h4><strong>Year</strong></h4></dt>
+								<dd><h4><em>{{lecture.year}}</em></h4></dd>
+							</dl>
+					    </uib-accordion-group>
+				    </uib-accordion>
+				    <button ng-show="lectureEditMode" class="btn btn-link edit-lecture" ng-click="saveLecture()" title="Save changes"><span class="glyphicon glyphicon-floppy-saved"></span></button>
+					<button style="margin-left:30px;" ng-show="lectureEditMode" class="btn btn-link edit-lecture" ng-click="cancelLecture()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
+				    <form ng-show="lectureEditMode" class="form-horizontal" name="myform" role="form" novalidate="">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Name</label>
+							<div class="col-md-9">
+								<input class="form-control" name="nm" type="text" ng-model="lecture.name" required>
+								<small ng-show="myform.nm.$error.required" class="text-error2">Required</small>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Line</label>
+							<div class="col-md-9">
+								<input class="form-control" name="" type="text" ng-model="lecture.line">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Laboratory</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" ng-model="lecture.laboratory">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Year</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" ng-model="lecture.year">
+							</div>
+						</div>
+					</form>
+				</div>				
+			</div>
+		</div>
+	</div>
+</div>

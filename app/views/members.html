@@ -1,0 +1,14 @@
+<div class="panel panel-default teachers">
+	<div class="panel-body">
+		<div class="col-md-3" ng-repeat="member in members">
+			<div class="thumbnail">
+				<img class="img-responsive img-circle portrait" src="images/eminescu.jpg" fallback-src="images/noimage.png">
+				<div class="caption text-center">
+					<a ng-href="#/profile/{{member.email}}"><h4><strong>{{member.name}}</strong></h4></a>
+					<p>{{member.memberFunction}}</p>
+					<p>{{member.role}}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

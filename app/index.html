@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="bower_components/toastr/toastr.css" />
+    <link rel="stylesheet" href="bower_components/AdminLTE/dist/css/AdminLTE.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="newProjectApp">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <div class="platform clearfix">
+      <div id="loaderDiv" loader>
+          <img src="images/loader.gif" class="ajax-loader"/>
+          <h3 class="text-loader"><strong>Loading ...</strong></h3>
+      </div>
+      <div class="header" navbar-header></div>
+
+      <div ng-view=""></div>
+
+      <div class="footer clearfix">
+        <div class="text-center">
+          <p><span class="glyphicon glyphicon-copyright-mark"></span> Pasca Rares</p>
+        </div>
+      </div>
+    </div>
+    <div class="arrow-up" title="Go to page top!" scroll-top><img src="images/arrowup.png"></div>
+
+    <script>
+      this.apiUrl = 'http://localhost:52447';
+    </script>
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/toastr/toastr.js"></script>
+    <script src="bower_components/AdminLTE/dist/js/app.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload-shim.js"></script>
+    <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+
+        <script src="scripts/models/models.js"></script>
+        <script src="scripts/models/mappers.js"></script>
+
+        <script src="scripts/services/localStore.js"></script>
+        <script src="scripts/services/authSvc.js"></script>
+        <script src="scripts/services/provider.js"></script>
+
+        <script src="scripts/directives/header.js"></script>
+
+        <script src="scripts/controllers/home.js"></script>
+        <script src="scripts/controllers/profile.js"></script>
+        <script src="scripts/controllers/administrator.js"></script>
+        <script src="scripts/controllers/projects.js"></script>
+        <script src="scripts/controllers/publications.js"></script>
+        <script src="scripts/controllers/teaching.js"></script>
+        <script src="scripts/controllers/members.js"></script>
+        <script src="scripts/controllers/contact.js"></script>
+        <!-- endbuild -->
+</body>
+</html>

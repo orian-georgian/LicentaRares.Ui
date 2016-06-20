@@ -1,0 +1,66 @@
+<div class="navbar navbar-inverse" role="navigation">
+  <div class="">
+    <div class="collapse navbar-collapse" id="js-navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li ng-class="{ 'active': isActive('/') }"><a href="#/">Home</a></li>
+        <li ng-class="{ 'active': isActive('/projects') }"><a ng-href="#/projects">Projects</a></li>
+        <li ng-class="{ 'active': isActive('/publications') }"><a ng-href="#/publications">Publications</a></li>
+        <li ng-class="{ 'active': isActive('/teaching') }"><a ng-href="#/teaching">Teaching</a></li>
+        <li ng-class="{ 'active': isActive('/members') }"><a ng-href="#/members">Members</a></li>
+        <li ng-class="{ 'active': isActive('/contact') }"><a ng-href="#/contact">Contact</a></li>
+      </ul>
+      <ul class="nav navbar-nav pull-right">
+        <li ng-show="user.AuthRole==='admin'" ng-class="{ 'active': isActive('/administrator') }"><a ng-href="#/administrator">{{user.Name}}</a></li>
+        <li ng-hide="user.AuthRole==='admin'" ng-class="{ 'active': isActive('/profile/') }"><a ng-href="#/profile/{{user.Email}}">{{user.Name}}</a></li>
+        <li ng-show="isLogged && user.AuthRole==='Member'" class="dropdown" id="menuLogin">
+            <a class="dropdown-toggle" href data-toggle="dropdown" id="navLogin">Change password <strong class="caret"></strong></a>
+            <div class="dropdown-menu pull-right" style="padding:17px;margin-top:3px;position:absolute">
+                <div class="card card-container">
+                    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+                    <p id="profile-name" class="profile-name-card"></p>
+                    <form class="form-signin" role="form" name="cgform" ng-submit="changePassword()" novalidate>
+                        <div class="form-group">
+                            <span id="reauth-email" class="reauth-email"></span>
+                            <small ng-show="cgform.mail.$error.pattern" class="text-error2">Invalid e-mail address format!</small>
+                            <input class="form-control" name="mail" ng-model="email" type="email" placeholder="E-mail" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required on-focus>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="newpass" ng-model="newPass" type="password" placeholder="New Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="confpass" ng-model="confPass" type="password" placeholder="Confirm Password" required>
+                            <small ng-show="areNotTheSame()" class="text-error2">The two passwords are not the same!</small>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-disabled="cgform.$invalid">Change password</button>
+                    </form>
+                </div>
+            </div>
+          </li>
+        <li ng-show="isLogged"><a class="dropdown-toggle" href ng-click="logout()">Logout</a></li>
+        <li ng-hide="isLogged" class="dropdown" id="menuLogin">
+            <a class="dropdown-toggle" href data-toggle="dropdown" id="navLogin">Login <strong class="caret"></strong></a>
+            <div class="dropdown-menu pull-right" style="padding:17px;margin-top:3px;position:absolute">
+                <div class="card card-container">
+                    <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+                    <p id="profile-name" class="profile-name-card"></p>
+                    <form class="form-signin" role="form" name="myform" ng-submit="login()" novalidate>
+                        <div class="form-group">
+                            <span id="reauth-email" class="reauth-email"></span>
+                            <small ng-show="myform.mail.$error.pattern" class="text-error2">Invalid e-mail address format!</small>
+                            <input class="form-control" name="mail" ng-model="email" type="email" placeholder="E-mail" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/" required on-focus>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control" name="pass" ng-model="password" type="password" placeholder="Password" required>
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit" ng-disabled="myform.$invalid">Sign in</button>
+                    </form>
+                    <a href="#" class="forgot-password">
+                        Forgot the password?
+                    </a>
+                </div>
+            </div>
+          </li>
+      </ul>
+    </div>
+  </div>
+</div>
