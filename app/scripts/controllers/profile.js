@@ -19,11 +19,9 @@
 
 			$scope.upload = function (file) {
 				Upload.upload({
-					url: apiUrl + 'member/photo',
-					data: { 
-						File: file,
-						Member: $scope.member
-					}
+					url: apiUrl + '/member/photo/' + $scope.member.id,
+					method: 'POST',
+					file: file
 				}).then(function (resp) {
 					console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
 				}, function (resp) {

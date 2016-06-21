@@ -125,7 +125,7 @@ body {
 
 .arrow-up {
   position: fixed;
-  z-index: 9999;
+  z-index: 99;
   bottom: 15px;
   right: 15px;
   cursor: pointer;

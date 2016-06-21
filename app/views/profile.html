@@ -114,14 +114,13 @@
 
 				<h3>Projects <button ng-if="canSee(member.email)" ng-hide="projectEditMode" class="btn btn-link edit-lecture" ng-click="editProject()" title="Add new project"><span class="glyphicon glyphicon-plus"></span></button></h3>
 				<div class="lecture-info">
-					<button ng-if="canSee(member.email)" style="margin-top:40px;" class="btn btn-link edit-lecture pull-right" ng-click="zapProject(project)" title="Remove project"><span class="glyphicon glyphicon-trash"></span></button>
 					<uib-accordion ng-hide="projectEditMode" close-others="true">
 					    <uib-accordion-group ng-repeat="project in member.projects" is-open="false">
 					    	<uib-accordion-heading>
 					    		{{project.title}} 
 					    	</uib-accordion-heading>
 					      	<button ng-if="canSee(member.email)" class="btn btn-link edit-lecture" ng-click="editProject(project)" title="Edit information"><span class="glyphicon glyphicon-pencil"></span></button>
-					      	
+					      	<button ng-if="canSee(member.email)" style="margin-top:40px;" class="btn btn-link edit-lecture" ng-click="zapProject(project)" title="Remove project"><span class="glyphicon glyphicon-trash"></span></button>
 							<dl ng class="dl-horizontal">
 								<dt><h4><strong>Title</strong></h4></dt>
 								<dd><h4><em>{{project.title}}</em></h4></dd>
@@ -160,6 +159,52 @@
 							<label class="col-sm-3 control-label">End date</label>
 							<div class="col-md-9">
 								<input class="form-control" type="text" ng-model="project.endDate">
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<h3>Publications <button ng-if="canSee(member.email)" ng-hide="publicationEditMode" class="btn btn-link edit-lecture" ng-click="editPublication()" title="Add new publication"><span class="glyphicon glyphicon-plus"></span></button></h3>
+				<div class="lecture-info">
+					<uib-accordion ng-hide="publicationEditMode" close-others="true">
+					    <uib-accordion-group ng-repeat="publication in member.publications" is-open="false">
+					    	<uib-accordion-heading>
+					    		{{publication.title}} 
+					    	</uib-accordion-heading>
+					      	<button ng-if="canSee(member.email)" class="btn btn-link edit-lecture" ng-click="editProject(publication)" title="Edit information"><span class="glyphicon glyphicon-pencil"></span></button>
+					      	<button ng-if="canSee(member.email)" style="margin-top:40px;" class="btn btn-link edit-lecture" ng-click="zapProject(publication)" title="Remove publication"><span class="glyphicon glyphicon-trash"></span></button>
+							<dl ng class="dl-horizontal">
+								<dt><h4><strong>Title</strong></h4></dt>
+								<dd><h4><em>{{publication.title}}</em></h4></dd>
+								<dt><h4><strong>Description</strong></h4></dt>
+								<dd><h4><em>{{publication.description}}</em></h4></dd>
+								<dt><h4><strong>Start date</strong></h4></dt>
+								<dd><h4><em>{{publication.startDate}}</em></h4></dd>
+								<dt><h4><strong>End date</strong></h4></dt>
+								<dd><h4><em>{{publication.endDate}}</em></h4></dd>
+							</dl>
+					    </uib-accordion-group>
+				    </uib-accordion>
+				    <button ng-show="publicationEditMode" class="btn btn-link edit-lecture" ng-click="savePublication()" title="Save changes"><span class="glyphicon glyphicon-floppy-saved"></span></button>
+					<button style="margin-left:30px;" ng-show="publicationEditMode" class="btn btn-link edit-lecture" ng-click="cancelPublication()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
+				    <form ng-show="publicationEditMode" class="form-horizontal" name="pubform" role="form" novalidate="">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Title</label>
+							<div class="col-md-9">
+								<input class="form-control" name="nm" type="text" ng-model="publication.title" required>
+								<small ng-show="pubform.nm.$error.required" class="text-error2">Required</small>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Description</label>
+							<div class="col-md-9">
+								<textarea class="form-control" type="text" ng-model="publication.description"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Publication date</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" ng-model="publication.publicationDate">
 							</div>
 						</div>
 					</form>
