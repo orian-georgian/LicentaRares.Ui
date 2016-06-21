@@ -87,7 +87,7 @@
     ng.module('newProjectApp')
         .service('tokenInterceptor', ['$q', function ($q) {
             this.responseError = function (rejection) {
-                if (rejection.status === 403) {
+                if (rejection.status === 401) {
                     clearHeaders();
                 }
                 return $q.reject(rejection);

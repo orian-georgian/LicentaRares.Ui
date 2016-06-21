@@ -3,7 +3,7 @@
 	'use strict';
 
 	angular.module('newProjectApp')
-		.controller('ProfileCtrl', ['$scope', '$routeParams', 'DataProvider', 'FileUploader', 'apiUrl', 'localStore', '$route', function($scope, params, data, FileUploader, apiUrl, store, $route) {
+		.controller('ProfileCtrl', ['$scope', '$routeParams', 'DataProvider', 'FileUploader', 'apiUrl', 'localStore', '$route', '$location', function($scope, params, data, FileUploader, apiUrl, store, $route,$l) {
 
 			var clone = null,
 				lclone = null,
@@ -13,6 +13,10 @@
 			function initialize() {
 				data.members().then(function(members) {					
 					$scope.member = _.find(members, { email : params.email });
+					if (!$scope.member) {
+						$l.path('/');
+						return;
+					}
 					$scope.uploadButtonName = $scope.member.memberPhoto ? 'Change picture' : 'Upload picture';
 				});
 			}

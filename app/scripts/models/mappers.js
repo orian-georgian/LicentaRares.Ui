@@ -18,7 +18,7 @@
 					lecture.line = l.Line;
 					lecture.laboratory = l.Laboratory;
 					lecture.year = l.Year;
-					lecture.teacher = l.Teacher;
+					lecture.teachers = l.Teachers;
 					return lecture;
 				});
 			}
@@ -100,9 +100,7 @@
 						Line: l.line,
 						Laboratory: l.laboratory,
 						Year: l.year,
-						Teacher: {
-							Id: memberId
-						}
+						Teachers: []
 					};
 				});
 			}

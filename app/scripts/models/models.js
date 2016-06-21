@@ -8,7 +8,7 @@
 		this.line = null;
 		this.laboratory = null;
 		this.year = null;
-		this.teacher = null;
+		this.teachers = [];
 	}
 
 	function Project() {
