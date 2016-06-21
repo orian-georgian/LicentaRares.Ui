@@ -1,28 +1,36 @@
-<div class="panel panel-default">
-	<div class="panel-body">
-		<form class="col-md-6" name="myform" novalidate>
-			<div class="form-group">
-				<label>Full name</label>
-				<input class="form-control" type="text" name="nm" ng-model="name" placeholder="First name and last name" required>
-				<small ng-show="myform.nm.$error.required" class="text-error2">Name required!</small>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<form role="form" name="myform" novalidate>
+							<div class="form-group col-md-12">
+								<label>Full name</label>
+								<input class="form-control" type="text" name="nm" ng-model="name" placeholder="First name and last name" required>
+								<small ng-show="myform.nm.$error.required" class="text-error2">Name required!</small>
+							</div>
+							<div class="form-group col-md-12">
+								<label>E-mail</label>
+								<input class="form-control" type="email" name="mail" ng-model="email" placeholder="E-mail address" required>
+								<small ng-show="myform.mail.$error.email" class="text-error2">Invalid mail address!</small>
+							</div>
+							<div class="form-group col-md-12">
+								<label>Message</label>
+								<textarea class="form-control" name="msg" ng-model="message" placeholder="Message" rows="6" required></textarea>
+								<small ng-show="myform.msg.$error.required" class="text-error2">Message required!</small>
+							</div>
+							<div class="form-group col-md-12">
+								<button class="btn btn-primary" ng-click="sendMessage()" ng-disabled="myform.$invalid" >Send message</button>
+								<button class="btn btn-primary" ng-click="reset()" >Reset</button>
+							</div>
+						</form>
+					</div>
+					<div class="col-md-6">
+						<img src="images/contact.png" class="img-responsive">
+					</div>
+				</div>
 			</div>
-			<div class="form-group">
-				<label>E-mail</label>
-				<input class="form-control" type="email" name="mail" ng-model="email" placeholder="E-mail address" required>
-				<small ng-show="myform.mail.$error.email" class="text-error2">Invalid mail address!</small>
-			</div>
-			<div class="form-group">
-				<label>Message</label>
-				<textarea class="form-control" name="msg" ng-model="message" placeholder="Message" rows="6" required></textarea>
-				<small ng-show="myform.msg.$error.required" class="text-error2">Message required!</small>
-			</div>
-			<div class="form-group">
-				<button class="btn btn-primary" ng-click="sendMessage()" ng-disabled="myform.$invalid" >Send message</button>
-				<button class="btn btn-primary" ng-click="reset()" >Reset</button>
-			</div>
-		</form>
-		<div class="col-md-6">
-			<img src="images/contact.png" class="img-responsive">
 		</div>
 	</div>
 </div>

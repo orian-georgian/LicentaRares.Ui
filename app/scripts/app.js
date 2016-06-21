@@ -1,4 +1,4 @@
-(function (angular, $) {
+(function (angular, $, moment) {
 
     'use strict';
 
@@ -20,7 +20,7 @@
             'ngTouch',
             'ui.bootstrap',
             'ui.bootstrap.tpls',
-            'ngFileUpload'
+            'angularFileUpload'
         ])
         .value('apiUrl', this.apiUrl || 'http://localhost:52447')
         .factory('httpInterceptor', function ($q, $rootScope, $log) {
@@ -126,6 +126,11 @@
                     });
                 }
             };
+        })
+        .filter('dateFormat', function() {
+            return function(input) {
+                return moment(input).format('MM/DD/YYYY');
+            };
         });
 
-}).call(this, this.angular, this.jQuery);
+}).call(this, this.angular, this.jQuery, this.moment);

@@ -1,1 +1,25 @@
-<p>This is the about view.</p>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<input type="text" class="form-control text-center" ng-model="filter.project.title" placeholder="Search by project title">
+					</div>
+				</div><br/>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="list-group">
+							<div class="list-group-item clearfix" ng-repeat="project in projects | filter:filter | orderBy:'project.title'">
+								<h4 class="list-group-item-heading">{{project.project.title}}</h4>
+								<p class="list-group-item-text">{{project.project.description}}</p>
+								<a ng-href="#/profile/{{project.memberEmail}}" class="pull-right"><strong><em>{{project.memberName}}</em></strong></a>
+								<p>From <span class="label label-primary">{{project.project.startDate | dateFormat}}</span>, to <span class="label label-primary">{{project.project.endDate | dateFormat}}</span></p>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

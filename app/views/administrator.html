@@ -1,46 +1,57 @@
 <div class="administrator row">
-	<div ng-hide="isEditMode" class="col-md-12">
-		<div style="margin-bottom:10px;">
-			<div class="input-group">
-				<div class="input-group-btn">
-					<button class="btn btn-primary" ng-click="add()"><span class="glyphicon glyphicon-plus"></span> <strong>Add new member</strong></button>
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div ng-hide="isEditMode" class="col-md-12">
+						<div style="margin-bottom:10px;">
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button class="btn btn-primary" ng-click="add()"><span class="glyphicon glyphicon-plus"></span> <strong>Add new member</strong></button>
+								</div>
+								<input class="form-control" type="text" name="fltr" ng-model="filter.name" placeholder="Filter by member name">
+							</div>
+						</div>
+						<ul class="list-group members">
+							<li class="list-group-item" ng-repeat="member in members | orderBy:'name' | filter:filter">
+								<a ng-click="edit(member)" href title="Edit member"><span>{{member.name}}</span></a>
+								<a ng-click="zap(member)" href title="Remove member"><span class="glyphicon glyphicon-trash pull-right"></span></a>
+							</li>
+						</ul>
+						<h3 class="text-center" ng-show="notMemberFound()">No member found!</h3>
+					</div>
+					<form ng-show="isEditMode" name="myform" role="form" novalidate>
+						<div class="form-group col-md-6">
+							<label>First name and last name</label>
+							<input class="form-control" type="text" name="name" ng-model="member.name" placeholder="First name and last name" required>
+							<small ng-show="myform.name.$error.required" class="text-error2">Required</small>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Role</label>
+							<input class="form-control" type="text" name="role" ng-model="member.role" placeholder="Role">
+						</div>
+						<div class="form-group col-md-6">
+							<label>Function</label>
+							<input class="form-control" type="text" name="function" ng-model="member.memberFunction" placeholder="Function" required>
+							<small ng-show="myform.function.$error.required" class="text-error2">Required</small>
+						</div>
+						<div class="form-group col-md-6">
+							<label>Personal page</label>
+							<input class="form-control" type="text" name="page" ng-model="member.personalPage" placeholder="Personal page">
+						</div>
+						<div class="form-group col-md-6">
+							<label>E-mail</label>
+							<input class="form-control" type="email" name="mail" ng-model="member.email" placeholder="Personal email" required>
+							<small ng-show="myform.mail.$error.email" class="text-error2">Invaid mail address!</small>
+							<small ng-show="myform.mail.$error.required" class="text-error2">Required</small>
+						</div>
+						<div class="form-group col-md-12">
+							<button class="btn btn-primary btn-sm" type="button" ng-click="save()" ng-disabled="myform.$invalid">Save</button>
+							<button class="btn btn-primary btn-sm" type="button" ng-click="reset()">Cancel</button>
+						</div>
+					</form>
 				</div>
-				<input class="form-control" type="text" name="fltr" ng-model="filter.name" placeholder="Filter by member name">
 			</div>
 		</div>
-		<ul class="list-group members">
-			<li class="list-group-item" ng-repeat="member in members | orderBy:'name' | filter:filter">
-				<a ng-click="edit(member)" href title="Edit member"><span>{{member.name}}</span></a>
-				<a ng-click="zap(member)" href title="Remove member"><span class="glyphicon glyphicon-trash pull-right"></span></a>
-			</li>
-		</ul>
-		<h3 class="text-center" ng-show="notMemberFound()">No member found!</h3>
 	</div>
-	<form ng-show="isEditMode" name="myform" role="form" novalidate>
-		<div class="form-group col-md-6" ng-class="{ 'text-error' : myform.name.$invalid}">
-			<label>First name and last name</label>
-			<input class="form-control" type="text" name="name" ng-model="member.name" placeholder="First name and last name" required>
-		</div>
-		<div class="form-group col-md-6">
-			<label>Role</label>
-			<input class="form-control" type="text" name="role" ng-model="member.role" placeholder="Role">
-		</div>
-		<div class="form-group col-md-6" ng-class="{ 'text-error' : myform.function.$invalid}">
-			<label>Function</label>
-			<input class="form-control" type="text" name="function" ng-model="member.memberFunction" placeholder="Function" required>
-		</div>
-		<div class="form-group col-md-6">
-			<label>Personal page</label>
-			<input class="form-control" type="text" name="page" ng-model="member.personalPage" placeholder="Personal page">
-		</div>
-		<div class="form-group col-md-6" ng-class="{ 'text-error' : myform.mail.$invalid}">
-			<label>E-mail</label>
-			<input class="form-control" type="email" name="mail" ng-model="member.email" placeholder="Personal email" required>
-			<small ng-show="myform.mail.$error.email" class="text-error2">Invaid mail address!</small>
-		</div>
-		<div class="form-group col-md-12">
-			<button class="btn btn-primary btn-sm" type="button" ng-click="save()" ng-disabled="myform.$invalid">Save</button>
-			<button class="btn btn-primary btn-sm" type="button" ng-click="reset()">Cancel</button>
-		</div>
-	</form>
 </div>

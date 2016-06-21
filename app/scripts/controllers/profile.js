@@ -3,48 +3,61 @@
 	'use strict';
 
 	angular.module('newProjectApp')
-		.controller('ProfileCtrl', ['$scope', '$routeParams', 'DataProvider', 'Upload', 'apiUrl', function($scope, params, data, Upload, apiUrl) {
+		.controller('ProfileCtrl', ['$scope', '$routeParams', 'DataProvider', 'FileUploader', 'apiUrl', 'localStore', '$route', function($scope, params, data, FileUploader, apiUrl, store, $route) {
 
-			var clone = null;
+			var clone = null,
+				lclone = null,
+				prjclone = null,
+				pubclone = null;
 
 			function initialize() {
 				data.members().then(function(members) {					
 					$scope.member = _.find(members, { email : params.email });
+					$scope.uploadButtonName = $scope.member.memberPhoto ? 'Change picture' : 'Upload picture';
 				});
 			}
 
+			$scope.format = 'MM /dd /yyyy';
 			$scope.infoEditMode = false;
 			$scope.lectureEditMode = false;
 			$scope.projectEditMode = false;
-
-			$scope.upload = function (file) {
-				Upload.upload({
-					url: apiUrl + '/member/photo/' + $scope.member.id,
-					method: 'POST',
-					file: file
-				}).then(function (resp) {
-					console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
-				}, function (resp) {
-					console.log('Error status: ' + resp.status);
-				}, function (evt) {
-					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-					console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
-				});
-			};
+			$scope.publicationEditMode = false;
+			$scope.years = ['Year 1', 'Year 2', 'Year 3', 'Year 4'];
+			$scope.lines = ['Roumanian', 'English', 'German', 'Hungarian'];
+			$scope.uploader = new FileUploader({
+				url: apiUrl + '/member/photo',
+				method: 'POST',
+				headers: {
+					'X-User-Token': store.get('Token')
+				}
+			});
+			
+			$scope.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+	            initialize();
+	            $scope.uploader.queue = [];
+	        };
 
 			$scope.editInfo = function() {
-				clone = _.clone($scope.member);
+				clone = _.cloneDeep($scope.member);
 				$scope.infoEditMode = true;
 			};
 
 			$scope.editLecture = function(lecture) {
+				lclone = _.cloneDeep($scope.member);
 				$scope.lecture = lecture;
 				$scope.lectureEditMode = true;
 			};
 
 			$scope.editProject = function(project) {
+				prjclone = _.cloneDeep($scope.member);
 				$scope.project = project;
 				$scope.projectEditMode = true;
+			};
+
+			$scope.editPublication = function(publication) {
+				pubclone = _.cloneDeep($scope.member);
+				$scope.publication = publication;
+				$scope.publicationEditMode = true;
 			};
 
 			$scope.saveInfo = function() {
@@ -88,12 +101,20 @@
 				});
 			};
 
-			$scope.cancelLecture = function() {
-				$scope.lectureEditMode = false;
-			};
-
-			$scope.cancelProject = function() {
-				$scope.projectEditMode = false;
+			$scope.savePublication = function() {
+				if (!$scope.publication.id) {
+					$scope.member.publications.push({
+						id: null,
+						title: $scope.publication.title,
+						description: $scope.publication.description,
+						publicationDate: $scope.publication.publicationDate
+					});
+				}
+				data.update($scope.member).then(function() {
+					box.success('Publication saved!');
+					$scope.publicationEditMode = false;
+					initialize();
+				});
 			};
 
 			$scope.zapLecture = function(lecture) {
@@ -116,6 +137,16 @@
 				});
 			};
 
+			$scope.zapPublication = function(publication) {
+				if (!confirm('Are you sure you want te remove this publication?')) {
+					return;
+				}
+				$scope.member.publications = _.without($scope.member.publications, publication);
+				data.update($scope.member).then(function() {
+					box.success('Publication removed!');
+				});
+			};
+
 			$scope.cancelUpdateInfo = function() {
 				if (!_.isEqual(clone, $scope.member)) {
 					if (!confirm('Your changes will be lost. Are you sure?')) {
@@ -126,8 +157,71 @@
 				$scope.infoEditMode = false;
 			};
 
+			$scope.cancelLecture = function() {
+				if (!_.isEqual(lclone, $scope.member)) {
+					if (!confirm('Your changes will be lost. Are you sure?')) {
+						return;
+					}
+					$scope.member = lclone;
+				}
+				$scope.lectureEditMode = false;
+			};
+
+			$scope.cancelProject = function() {
+				if (!_.isEqual(prjclone, $scope.member)) {
+					if (!confirm('Your changes will be lost. Are you sure?')) {
+						return;
+					}
+					$scope.member = prjclone;
+				}
+				$scope.projectEditMode = false;
+			};
+
+			$scope.cancelPublication = function() {
+				if (!_.isEqual(pubclone, $scope.member)) {
+					if (!confirm('Your changes will be lost. Are you sure?')) {
+						return;
+					}
+					$scope.member = pubclone;
+				}
+				$scope.publicationEditMode = false;
+			};
+
 			$scope.isFormDirty = function() {
 				return $scope.myform.$invalid || !$scope.myform.$dirty;
+			};
+			$scope.isLctFormDirty = function() {
+				return $scope.lform.$invalid || !$scope.lform.$dirty || !$scope.lecture.year || !$scope.lecture.line;
+			};
+			$scope.isPrjFormDirty = function() {
+				return $scope.pjform.$invalid || !$scope.pjform.$dirty;
+			};
+			$scope.isPubFormDirty = function() {
+				return $scope.pubform.$invalid || !$scope.pubform.$dirty;
+			};
+
+			$scope.popup1 = {
+				opened: false
+			};
+
+			$scope.popup2 = {
+				opened: false
+			};
+
+			$scope.popup3 = {
+				opened: false
+			};
+
+			$scope.open1 = function() {
+				$scope.popup1.opened = true;
+			};
+
+			$scope.open2 = function() {
+				$scope.popup2.opened = true;
+			};
+
+			$scope.open3 = function() {
+				$scope.popup3.opened = true;
 			};
 
 			initialize();

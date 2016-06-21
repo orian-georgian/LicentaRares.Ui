@@ -35,6 +35,7 @@
 		this.memberFunction = null;
 		this.role = null;
 		this.email = null;
+		this.memberPhoto = null;
 		this.projects = [];
 		this.lectures = [];
 		this.publications = [];

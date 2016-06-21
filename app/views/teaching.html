@@ -1,1 +1,32 @@
-teaching
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<uib-accordion close-others="true">
+						    <uib-accordion-group is-open="status.open" ng-repeat="group in yearGroups">
+						    	<uib-accordion-heading>
+						    		{{group[0].l.year}} <span class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></span>
+						    	</uib-accordion-heading>
+						    	<div class="list-group">
+									<div class="list-group-item clearfix" ng-repeat="lecture in group">
+										<h4 class="list-group-item-heading">{{lecture.l.name}}</h4>
+										<a ng-href="#/profile/{{lecture.memberEmail}}" class="pull-right"><strong><em>{{lecture.memberName}}</em></strong></a>
+										<p><span class="list-group-item-text label label-info">{{lecture.l.line}}</span>
+										<span class="list-group-item-text label label-primary">{{lecture.l.laboratory}}</span></p>
+									</div>
+								</div>
+						    </uib-accordion-group>
+					    </uib-accordion>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

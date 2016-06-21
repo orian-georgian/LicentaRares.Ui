@@ -33,7 +33,8 @@ module.exports = function(config) {
       'bower_components/lodash/lodash.js',
       'bower_components/toastr/toastr.js',
       'bower_components/AdminLTE/dist/js/app.js',
-      'bower_components/ng-file-upload/ng-file-upload.js',
+      'bower_components/moment/moment.js',
+      'bower_components/angular-file-upload/dist/angular-file-upload.min.js',
       'bower_components/angular-mocks/angular-mocks.js',
       // endbower
       'app/scripts/**/*.js',

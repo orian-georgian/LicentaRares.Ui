@@ -1,4 +1,4 @@
-(function (angular, u, _) {
+(function (angular, u, _, moment) {
 
 	'use strict';
 
@@ -29,8 +29,8 @@
 					project.id = p.Id;
 					project.title = p.Title;
 					project.description = p.Description;
-					project.startDate = p.StartDate;
-					project.endDate = p.EndDate;
+					project.startDate = moment(p.StartDate).valueOf();
+					project.endDate = moment(p.EndDate).valueOf();
 					project.coordinators = p.Coordinators;
 					return project;
 				});
@@ -42,7 +42,7 @@
 					publication.id = p.Id;
 					publication.title = p.Title;
 					publication.description = p.Description;
-					publication.publicationDate = p.PublicationDate;
+					publication.publicationDate = moment(p.PublicationDate).valueOf();
 					publication.authors = p.Authors;
 					return publication;
 				});
@@ -57,6 +57,7 @@
 					member.memberFunction = m.MemberFunction;
 					member.personalPage = m.PersonalPage;
 					member.email = m.Email;
+					member.memberPhoto = m.MemberPhoto;
 					member.lectures = mapLectures(m.Lectures);
 					member.projects = mapProjects(m.Projects);
 					member.publications = mapPublications(m.Publications);
@@ -84,8 +85,8 @@
 						Id: p.id ? p.id : 0,
 						Title: p.title,
 						Description: p.description,
-						StartDate: p.startDate,
-						EndDate: p.endDate,
+						StartDate: moment(p.startDate).format('MM-DD-YYYY'),
+						EndDate: moment(p.endDate).format('MM-DD-YYYY'),
 						Coordinators: []
 					};
 				});
@@ -112,7 +113,7 @@
 						Id: p.id ? p.id : 0,
 						Title: p.title,
 						Description: p.description,
-						PublicationDate: p.publicationDate,
+						PublicationDate: moment(p.publicationDate).format('MM-DD-YYYY'),
 						Authors : []
 					};
 				});
@@ -126,6 +127,7 @@
 					PersonalPage: member.personalPage,
 					MemberFunction: member.memberFunction,
 					Email: member.email,
+					MemberPhoto: member.memberPhoto,
 					Projects: unmapProjects(member.projects),
 					Lectures: unmapLectures(member.lectures, member.id),
 					Publications: unmapPublications(member.publications)
@@ -138,4 +140,4 @@
 
 		});
 
-}).call(this, this.angular, this.Model.University, this._);
+}).call(this, this.angular, this.Model.University, this._, this.moment);

@@ -1,14 +1,25 @@
 <div class="panel panel-default teachers">
 	<div class="panel-body">
-		<div class="col-md-3" ng-repeat="member in members">
-			<div class="thumbnail">
-				<img class="img-responsive img-circle portrait" src="images/eminescu.jpg" fallback-src="images/noimage.png">
-				<div class="caption text-center">
-					<a ng-href="#/profile/{{member.email}}"><h4><strong>{{member.name}}</strong></h4></a>
-					<p>{{member.memberFunction}}</p>
-					<p>{{member.role}}</p>
+		<div class="row">
+			<div class="col-md-12">
+				<input type="text" class="form-control text-center" ng-model="filter.name" placeholder="Search by member name">
+			</div>
+		</div><br/>
+		<div class="row">
+			<div class="col-md-3" ng-repeat="member in members | filter:filter | orderBy:'name'">
+				<div class="thumbnail">
+					<img style="max-height:150px;" class="img-responsive img-thumbnail portrait" ng-src="images/{{member.memberPhoto}}" fallback-src="images/noimage.png">
+					<div class="caption">
+						<a class="text-center" ng-href="#/profile/{{member.email}}"><h4><strong>{{member.name}}</strong></h4></a>
+						<div>
+							<small><span class="label label-info">{{member.lectures.length}}</span> lecture(s)</small> <br/>
+							<small><span class="label label-primary">{{member.projects.length}}</span> project(s)</small> <br/>
+							<small><span class="label label-default">{{member.publications.length}}</span> publication(s)</small>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<div class="arrow-up" title="Go to page top!" scroll-top><img src="images/arrowup.png"></div>
