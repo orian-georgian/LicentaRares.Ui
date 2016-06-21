@@ -83,12 +83,12 @@
 				    </uib-accordion>
 				    <button ng-show="lectureEditMode" class="btn btn-link edit-lecture" ng-click="saveLecture()" title="Save changes"><span class="glyphicon glyphicon-floppy-saved"></span></button>
 					<button style="margin-left:30px;" ng-show="lectureEditMode" class="btn btn-link edit-lecture" ng-click="cancelLecture()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
-				    <form ng-show="lectureEditMode" class="form-horizontal" name="myform" role="form" novalidate="">
+				    <form ng-show="lectureEditMode" class="form-horizontal" name="lform" role="form" novalidate="">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Name</label>
 							<div class="col-md-9">
 								<input class="form-control" name="nm" type="text" ng-model="lecture.name" required>
-								<small ng-show="myform.nm.$error.required" class="text-error2">Required</small>
+								<small ng-show="lform.nm.$error.required" class="text-error2">Required</small>
 							</div>
 						</div>
 						<div class="form-group">
@@ -107,6 +107,59 @@
 							<label class="col-sm-3 control-label">Year</label>
 							<div class="col-md-9">
 								<input class="form-control" type="text" ng-model="lecture.year">
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<h3>Projects <button ng-if="canSee(member.email)" ng-hide="projectEditMode" class="btn btn-link edit-lecture" ng-click="editProject()" title="Add new project"><span class="glyphicon glyphicon-plus"></span></button></h3>
+				<div class="lecture-info">
+					<button ng-if="canSee(member.email)" style="margin-top:40px;" class="btn btn-link edit-lecture pull-right" ng-click="zapProject(project)" title="Remove project"><span class="glyphicon glyphicon-trash"></span></button>
+					<uib-accordion ng-hide="projectEditMode" close-others="true">
+					    <uib-accordion-group ng-repeat="project in member.projects" is-open="false">
+					    	<uib-accordion-heading>
+					    		{{project.title}} 
+					    	</uib-accordion-heading>
+					      	<button ng-if="canSee(member.email)" class="btn btn-link edit-lecture" ng-click="editProject(project)" title="Edit information"><span class="glyphicon glyphicon-pencil"></span></button>
+					      	
+							<dl ng class="dl-horizontal">
+								<dt><h4><strong>Title</strong></h4></dt>
+								<dd><h4><em>{{project.title}}</em></h4></dd>
+								<dt><h4><strong>Description</strong></h4></dt>
+								<dd><h4><em>{{project.description}}</em></h4></dd>
+								<dt><h4><strong>Start date</strong></h4></dt>
+								<dd><h4><em>{{project.startDate}}</em></h4></dd>
+								<dt><h4><strong>End date</strong></h4></dt>
+								<dd><h4><em>{{project.endDate}}</em></h4></dd>
+							</dl>
+					    </uib-accordion-group>
+				    </uib-accordion>
+				    <button ng-show="projectEditMode" class="btn btn-link edit-lecture" ng-click="saveProject()" title="Save changes"><span class="glyphicon glyphicon-floppy-saved"></span></button>
+					<button style="margin-left:30px;" ng-show="projectEditMode" class="btn btn-link edit-lecture" ng-click="cancelProject()" title="Cancel"><span class="glyphicon glyphicon-remove"></span></button>
+				    <form ng-show="projectEditMode" class="form-horizontal" name="pjform" role="form" novalidate="">
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Title</label>
+							<div class="col-md-9">
+								<input class="form-control" name="nm" type="text" ng-model="project.title" required>
+								<small ng-show="pjform.nm.$error.required" class="text-error2">Required</small>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Description</label>
+							<div class="col-md-9">
+								<textarea class="form-control" type="text" ng-model="project.description"></textarea>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">Start date</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" ng-model="project.startDate">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">End date</label>
+							<div class="col-md-9">
+								<input class="form-control" type="text" ng-model="project.endDate">
 							</div>
 						</div>
 					</form>

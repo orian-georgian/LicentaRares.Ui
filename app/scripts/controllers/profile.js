@@ -3,7 +3,7 @@
 	'use strict';
 
 	angular.module('newProjectApp')
-		.controller('ProfileCtrl', ['$scope', '$routeParams', 'DataProvider', 'Upload', function($scope, params, data, Upload) {
+		.controller('ProfileCtrl', ['$scope', '$routeParams', 'DataProvider', 'Upload', 'apiUrl', function($scope, params, data, Upload, apiUrl) {
 
 			var clone = null;
 
@@ -15,11 +15,15 @@
 
 			$scope.infoEditMode = false;
 			$scope.lectureEditMode = false;
+			$scope.projectEditMode = false;
 
 			$scope.upload = function (file) {
 				Upload.upload({
-					url: 'upload/url',
-					data: { file: file }
+					url: apiUrl + 'member/photo',
+					data: { 
+						File: file,
+						Member: $scope.member
+					}
 				}).then(function (resp) {
 					console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
 				}, function (resp) {
@@ -38,6 +42,11 @@
 			$scope.editLecture = function(lecture) {
 				$scope.lecture = lecture;
 				$scope.lectureEditMode = true;
+			};
+
+			$scope.editProject = function(project) {
+				$scope.project = project;
+				$scope.projectEditMode = true;
 			};
 
 			$scope.saveInfo = function() {
@@ -64,8 +73,29 @@
 				});
 			};
 
+			$scope.saveProject = function() {
+				if (!$scope.project.id) {
+					$scope.member.projects.push({
+						id: null,
+						title: $scope.project.title,
+						description: $scope.project.description,
+						startDate: $scope.project.startDate,
+						endDate: $scope.project.endDate
+					});
+				}
+				data.update($scope.member).then(function() {
+					box.success('Project saved!');
+					$scope.projectEditMode = false;
+					initialize();
+				});
+			};
+
 			$scope.cancelLecture = function() {
 				$scope.lectureEditMode = false;
+			};
+
+			$scope.cancelProject = function() {
+				$scope.projectEditMode = false;
 			};
 
 			$scope.zapLecture = function(lecture) {
@@ -75,6 +105,16 @@
 				$scope.member.lectures = _.without($scope.member.lectures, lecture);
 				data.update($scope.member).then(function() {
 					box.success('Lecture removed!');
+				});
+			};
+
+			$scope.zapProject = function(project) {
+				if (!confirm('Are you sure you want te remove this project?')) {
+					return;
+				}
+				$scope.member.projects = _.without($scope.member.projects, project);
+				data.update($scope.member).then(function() {
+					box.success('Project removed!');
 				});
 			};
 

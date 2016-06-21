@@ -81,7 +81,7 @@
 			function unmapProjects(dto) {
 				return _.map(dto, function(p) {
 					return {
-						Id: p.id,
+						Id: p.id ? p.id : 0,
 						Title: p.title,
 						Description: p.description,
 						StartDate: p.startDate,
@@ -93,16 +93,8 @@
 
 			function unmapLectures(dto, memberId) {
 				return _.map(dto, function(l) {
-					return _.isNull(l.id) ? {
-						Name: l.name,
-						Line: l.line,
-						Laboratory: l.laboratory,
-						Year: l.year,
-						Teacher: {
-							Id: memberId
-						} 
-					} : {
-						Id: l.id,
+					return {
+						Id: l.id ? l.id : 0,
 						Name: l.name,
 						Line: l.line,
 						Laboratory: l.laboratory,
@@ -117,7 +109,7 @@
 			function unmapPublications(dto) {
 				return _.map(dto, function(p) {
 					return {
-						Id: p.id,
+						Id: p.id ? p.id : 0,
 						Title: p.title,
 						Description: p.description,
 						PublicationDate: p.publicationDate,
